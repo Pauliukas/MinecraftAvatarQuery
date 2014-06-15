@@ -1,4 +1,9 @@
 <?php
+//ini_set("display_errors", 1);
+//ini_set("track_errors", 1);
+//ini_set("html_errors", 1);
+//error_reporting(E_ALL);
+
 //The following script is tested only with servers running on Minecraft 1.7.
 
 $SERVER_IP = "sky.freecraft.eu"; //Insert the IP of the server you want to query. Query must be enabled in your server.properties file!
@@ -35,7 +40,7 @@ function get_data($url)
 } 
 
 //Query the data from the server using Minecraft API (also known as IamPhoenix's API)
-$serverdata    = get_data("http://mcapi.sweetcode.de/api/v2/?ip=" . $SERVER_IP . "");
+$serverdata = get_data("http://mcapi.sweetcode.de/api/v2/?ip=" . $SERVER_IP . "&port=". $SERVER_PORT ."");
 $userlistserver = get_data("http://mcapi.sweetcode.de/api/v1/query/?ip=" . $SERVER_IP . ":" . $SERVER_PORT ."");
 
 //* DEBUG AREA
@@ -51,6 +56,17 @@ $data_general  = json_decode($serverdata["data"], true);
 
 //Put the collected player information into an array for later use.
 $array_list = $data_list[$SERVER_IP]['player']['list'];
+
+$queryerror = "false";
+if(isset($data_list['error']) || !empty($data_list['error']) ) {
+	$queryerror = "true";
+}
+
+$haserror = "false";
+if($data_general['status'] != "true") {
+	$haserror = "true";
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -87,13 +103,13 @@ $array_list = $data_list[$SERVER_IP]['player']['list'];
 							<td><b>IP</b></td>
 							<td><?php echo $SERVER_IP; ?></td>
 						</tr>
-					<?php if ($serverdata["status"] == "200" && $data_general['error'] == "") { ?>
+					<?php if($haserror == "false") { ?>
 						<tr>
 							<td><b>Version</b></td>
 							<td><?php echo $data_general['version']; ?></td>
 						</tr>
 					<?php } ?>
-					<?php if ($serverdata["status"] == "200" && $data_general['error'] == "") { ?>
+					<?php if($haserror == "false") { ?>
 						<tr>
 							<td><b>Players</b></td>
 							<td><?php echo "".$data_general['player']['currently']." / ".$data_general['player']['max']."";?></td>
@@ -101,19 +117,21 @@ $array_list = $data_list[$SERVER_IP]['player']['list'];
 					<?php } ?>
 						<tr>
 							<td><b>Status</b></td>
-							<td><? if($data_general['status'] == 'true') { echo "<i class=\"icon-ok-sign\"></i> Server is online"; } else { echo "<i class=\"icon-remove-sign\"></i> Server is offline";}?></td>
+							<td><? if($haserror == "false") { echo "<i class=\"icon-ok-sign\"></i> Server is online"; } else { echo "<i class=\"icon-remove-sign\"></i> Server is offline";}?></td>
 						</tr>
-					<?php if ($serverdata["status"] == "200" && $data_general['error'] == "") { ?>
+					<?php if($haserror == "false") { ?>
 						<tr>
 							<td><b>Latency</b></td>
 							<td><?php echo "".$data_general['list']['ping']."ms"; ?></td>
 						</tr>
 					<?php } ?>
+					<?php if($haserror == "false") { ?>
 					<?php if ($SHOW_FAVICON == "on") { ?>
 						<tr>
 							<td><b>Favicon</b></td>
 							<td><img src='http://mcapi.sweetcode.de/api/v2/?favicon&ip=<?php echo $SERVER_IP;?>&port=<?php echo $SERVER_PORT;?>' width="64px" height="64px" style="float:left;"/></td>
 						</tr>
+					<?php } ?>
 					<?php } ?>
 					</tbody>
 				</table>
@@ -126,7 +144,7 @@ $array_list = $data_list[$SERVER_IP]['player']['list'];
 				} else {
 					$url = "https://cravatar.eu/helmavatar/";
 				}
-				if ($data_list['error'] == "") {
+				if($queryerror == "false" && $haserror == "false") {
 				//Take the username values from the array & grab the avatars from Minotar.				
 				foreach($array_list as $key => $value) {
 					$users .= "<a data-placement=\"top\" rel=\"tooltip\" style=\"display: inline-block;\" title=\"".$value."\">
