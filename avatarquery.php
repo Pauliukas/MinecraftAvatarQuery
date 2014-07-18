@@ -114,7 +114,7 @@ if($data_general['status'] != "true") {
 					<?php if ($SHOW_FAVICON == "on") { ?>
 						<tr>
 							<td><b>Favicon</b></td>
-							<td><img src='http://mcapi.sweetcode.de/api/v2/?favicon&ip=<?php echo $SERVER_IP;?>&port=<?php echo $SERVER_PORT;?>' width="64px" height="64px" style="float:left;"/></td>
+							<td><img src='<?php echo $favicon; ?>' width="64px" height="64px" style="float:left;"/></td>
 						</tr>
 					<?php } ?>
 					<?php } ?>
