@@ -46,17 +46,6 @@ if(empty($ping['error'])) {
 if(empty($query['error'])) {
 	$playerlist = $query['Playerlist'];
 }
-$array_list = $data_list[$SERVER_IP]['player']['list'];
-
-$queryerror = "false";
-if(isset($data_list['error']) || !empty($data_list['error']) ) {
-	$queryerror = "true";
-}
-
-$haserror = "false";
-if($data_general['status'] != "true") {
-	$haserror = "true";
-}
 
 ?>
 <!DOCTYPE html>
