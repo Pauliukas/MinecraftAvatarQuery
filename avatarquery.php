@@ -11,7 +11,7 @@ $SERVER_PORT = "25555"; //Insert the PORT of the server you want to ping. Needed
 $QUERY_PORT = "25555"; //Port of query.port="" in your server.properties. Needed for the playerlist! Can be the same like the port or different. Query must be enabled in your server.properties file!
 
 $HEADS = "3D"; //"normal" / "3D"
-$max = "unlimited"; // how much playerheads should we display? "unlimited" / "10" / "53"/ ...
+$show_max = "10"; // how much playerheads should we display? "unlimited" / "10" / "53"/ ...
 $SHOW_FAVICON = "on"; //"off" / "on"
 
 $TITLE = "My fancy Serverpage";
@@ -114,15 +114,15 @@ if(empty($query['error'])) {
 						$shown = "0";
 						foreach ($playerlist as $player) {
 							$shown++;
-							if($shown < $max + 1 || $max == "unlimited") {
+							if($shown < $show_max + 1 || $show_max == "unlimited") {
 						?>
 								<a data-placement="top" rel="tooltip" style="display: inline-block;" title="<?php echo $player;?>">
 								<img src="<?php echo $url.$player;?>/50" size="40" width="40" height="40" style="width: 40px; height: 40px; margin-bottom: 5px; margin-right: 5px; border-radius: 3px; "/></a>
 					<?php 	}
 						}
-						if($shown > $max && $max != "unlimited") {
+						if($shown > $show_max && $show_max != "unlimited") {
 							echo '<div class="span8" style="font-size:16px; margin-left: 0px;">';
-							echo "and " . (count($playerlist) - $max) . " more ...";
+							echo "and " . (count($playerlist) - $show_max) . " more ...";
 							echo '</div>';
 						}
 					} else {
