@@ -11,7 +11,7 @@ $SERVER_PORT = "25555"; //Insert the PORT of the server you want to ping. Needed
 $QUERY_PORT = "25555"; //Port of query.port="" in your server.properties. Needed for the playerlist! Can be the same like the port or different. Query must be enabled in your server.properties file!
 
 $HEADS = "3D"; //"normal" / "3D"
-$show_max = "10"; // how much playerheads should we display? "unlimited" / "10" / "53"/ ...
+$show_max = "unlimited"; // how much playerheads should we display? "unlimited" / "10" / "53"/ ...
 $SHOW_FAVICON = "on"; //"off" / "on"
 
 $TITLE = "My fancy Serverpage";
