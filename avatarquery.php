@@ -110,7 +110,6 @@ if(empty($query['error'])) {
 				}
 
 				if(empty($query['error'])) {
-					$online = count($playerlist);
 					if($playerlist != "null") { //is at least one player online? Then display it!
 						$shown = "0";
 						foreach ($playerlist as $player) {
