@@ -11,6 +11,7 @@ $SERVER_PORT = "25555"; //Insert the PORT of the server you want to ping. Needed
 $QUERY_PORT = "25555"; //Port of query.port="" in your server.properties. Needed for the playerlist! Can be the same like the port or different. Query must be enabled in your server.properties file!
 
 $HEADS = "3D"; //"normal" / "3D"
+$max = "unlimited"; // how much playerheads should we display? "unlimited" / "10" / "53"/ ...
 $SHOW_FAVICON = "on"; //"off" / "on"
 
 $TITLE = "My fancy Serverpage";
@@ -99,7 +100,7 @@ if(empty($query['error'])) {
 					</tbody>
 				</table>
 			</div>
-			<div class="span8" style="font-size:0px">
+			<div class="span8" style="font-size:0px;">
 				<h3><?php echo htmlspecialchars($TITLE_BLOCK_TWO); ?></h3>
 				<?php
 				if($HEADS == "3D") {
@@ -109,11 +110,22 @@ if(empty($query['error'])) {
 				}
 
 				if(empty($query['error'])) {
+					$online = count($playerlist);
 					if($playerlist != "null") { //is at least one player online? Then display it!
-						foreach ($playerlist as $player) { ?>
-							<a data-placement="top" rel="tooltip" style="display: inline-block;" title="<?php echo $player;?>">
-							<img src="<?php echo $url.$player;?>/50" size="40" width="40" height="40" style="width: 40px; height: 40px; margin-bottom: 5px; margin-right: 5px; border-radius: 3px; "/></a>
-				<?php	}
+						$shown = "0";
+						foreach ($playerlist as $player) {
+							$shown++;
+							if($shown < $max + 1 || $max == "unlimited") {
+						?>
+								<a data-placement="top" rel="tooltip" style="display: inline-block;" title="<?php echo $player;?>">
+								<img src="<?php echo $url.$player;?>/50" size="40" width="40" height="40" style="width: 40px; height: 40px; margin-bottom: 5px; margin-right: 5px; border-radius: 3px; "/></a>
+					<?php 	}
+						}
+						if($shown > $max && $max != "unlimited") {
+							echo '<div class="span8" style="font-size:16px; margin-left: 0px;">';
+							echo "and " . (count($playerlist) - $max) . " more ...";
+							echo '</div>';
+						}
 					} else {
 						echo "<div class=\"alert\"> There are no players online at the moment!</div>";
 					}
