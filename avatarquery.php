@@ -6,33 +6,22 @@
 
 //The following script is tested only with servers running on Minecraft 1.7.
 
-$SERVER_IP = "sky.freecraft.eu"; //Insert the IP of the server you want to query. Query must be enabled in your server.properties file!
-$SERVER_PORT = "25565"; //Insert the PORT of the server you want to ping. Needed to get the favicon, motd, players online and players max. etc
-$QUERY_PORT = "25565"; //Port of query.port="" in your server.properties. Needed for the playerlist! Can be the same like the port or different
+$SERVER_IP = "sky.freecraft.eu"; //Insert the IP of the server you want to query. 
+$SERVER_PORT = "25555"; //Insert the PORT of the server you want to ping. Needed to get the favicon, motd, players online and players max. etc
+$QUERY_PORT = "25555"; //Port of query.port="" in your server.properties. Needed for the playerlist! Can be the same like the port or different. Query must be enabled in your server.properties file!
 
 $HEADS = "3D"; //"normal" / "3D"
+$show_max = "unlimited"; // how much playerheads should we display? "unlimited" / "10" / "53"/ ...
 $SHOW_FAVICON = "on"; //"off" / "on"
 
 $TITLE = "My fancy Serverpage";
 $TITLE_BLOCK_ONE = "General Information";
 $TITLE_BLOCK_TWO = "Players";
 
-//You can either insert the DNS (eg. play.hivemc.com) OR the IP itself (eg. 187.23.123.21). 
-//Note: port is not neccesary when running the server on default port, otherwise use it!
-
-//End config
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $ping = json_decode(file_get_contents('http://api.minetools.eu/ping/' . $SERVER_IP . '/' . $SERVER_PORT . ''), true);
 $query = json_decode(file_get_contents('http://api.minetools.eu/query/' . $SERVER_IP . '/' . $QUERY_PORT . ''), true);
-
-//* DEBUG AREA
-//var_dump($serverdata);
-//echo "<br>";echo "<br>";
-//var_dump($userlistserver);
-//echo "<br>";echo "<br>";
-//* DEBUG AREA
 
 //Put the collected player information into an array for later use.
 if(empty($ping['error'])) { 
@@ -45,17 +34,6 @@ if(empty($ping['error'])) {
 
 if(empty($query['error'])) {
 	$playerlist = $query['Playerlist'];
-}
-$array_list = $data_list[$SERVER_IP]['player']['list'];
-
-$queryerror = "false";
-if(isset($data_list['error']) || !empty($data_list['error']) ) {
-	$queryerror = "true";
-}
-
-$haserror = "false";
-if($data_general['status'] != "true") {
-	$haserror = "true";
 }
 
 ?>
@@ -122,7 +100,7 @@ if($data_general['status'] != "true") {
 					</tbody>
 				</table>
 			</div>
-			<div class="span8">
+			<div class="span8" style="font-size:0px;">
 				<h3><?php echo htmlspecialchars($TITLE_BLOCK_TWO); ?></h3>
 				<?php
 				if($HEADS == "3D") {
@@ -133,10 +111,20 @@ if($data_general['status'] != "true") {
 
 				if(empty($query['error'])) {
 					if($playerlist != "null") { //is at least one player online? Then display it!
-						foreach ($playerlist as $player) { ?>
-							<a data-placement="top" rel="tooltip" style="display: inline-block;" title="<?php echo $player;?>">
-							<img src="<?php echo $url.$player;?>/50" size="40" width="40" height="40" style="width: 40px; height: 40px; margin-bottom: 5px; margin-right: 5px; border-radius: 3px; "/></a>
-				<?php	}
+						$shown = "0";
+						foreach ($playerlist as $player) {
+							$shown++;
+							if($shown < $show_max + 1 || $show_max == "unlimited") {
+						?>
+								<a data-placement="top" rel="tooltip" style="display: inline-block;" title="<?php echo $player;?>">
+								<img src="<?php echo $url.$player;?>/50" size="40" width="40" height="40" style="width: 40px; height: 40px; margin-bottom: 5px; margin-right: 5px; border-radius: 3px; "/></a>
+					<?php 	}
+						}
+						if($shown > $show_max && $show_max != "unlimited") {
+							echo '<div class="span8" style="font-size:16px; margin-left: 0px;">';
+							echo "and " . (count($playerlist) - $show_max) . " more ...";
+							echo '</div>';
+						}
 					} else {
 						echo "<div class=\"alert\"> There are no players online at the moment!</div>";
 					}
