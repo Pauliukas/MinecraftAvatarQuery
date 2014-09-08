@@ -126,10 +126,10 @@ if(empty($query['error'])) {
 							echo '</div>';
 						}
 					} else {
-						echo "<div class=\"alert\"> There are no players online at the moment!</div>";
+						echo "<div class=\"alert\" style=\"font-size:16px;\"> There are no players online at the moment!</div>";
 					}
 				} else {
-					echo "<div class=\"alert\"> Query must be enabled in your server.properties file!</div>";
+					echo "<div class=\"alert\" style=\"font-size:16px;\"> Query must be enabled in your server.properties file!</div>";
 				} ?>
 			</div>
 		</div>
