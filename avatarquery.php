@@ -42,11 +42,11 @@ if(empty($query['error'])) {
 	<head>
         <meta charset="utf-8">
         <title><?php echo htmlspecialchars($TITLE); ?></title>
-        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     	<link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
-    	<link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    	<script type="text/javascript" src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     	<script language="javascript">
    		jQuery(document).ready(function(){
  			$("[rel='tooltip']").tooltip();
@@ -63,7 +63,7 @@ if(empty($query['error'])) {
 	<div class="container">
         <h1><?php echo htmlspecialchars($TITLE); ?></h1><hr>       
 		<div class="row">
-			<div class="span4">
+			<div class="col-md-4">
 				<h3><?php echo htmlspecialchars($TITLE_BLOCK_ONE); ?></h3>
 				<table class="table table-striped">
 					<tbody>
@@ -85,7 +85,7 @@ if(empty($query['error'])) {
 					<?php } ?>
 						<tr>
 							<td><b>Status</b></td>
-							<td><?php if(empty($ping['error'])) { echo "<i class=\"icon-ok-sign\"></i> Server is online"; } else { echo "<i class=\"icon-remove-sign\"></i> Server is offline";}?></td>
+							<td><?php if(empty($ping['error'])) { echo "<i class=\"fa fa-check-circle\"></i> Server is online"; } else { echo "<i class=\"fa fa-times-circle\"></i> Server is offline";}?></td>
 						</tr>
 					<?php if(empty($ping['error'])) { ?>
 					<?php if(!empty($favicon)) { ?>
@@ -100,7 +100,7 @@ if(empty($query['error'])) {
 					</tbody>
 				</table>
 			</div>
-			<div class="span8" style="font-size:0px;">
+			<div class="col-md-8" style="font-size:0px;">
 				<h3><?php echo htmlspecialchars($TITLE_BLOCK_TWO); ?></h3>
 				<?php
 				if($HEADS == "3D") {
@@ -121,15 +121,15 @@ if(empty($query['error'])) {
 					<?php 	}
 						}
 						if($shown > $show_max && $show_max != "unlimited") {
-							echo '<div class="span8" style="font-size:16px; margin-left: 0px;">';
+							echo '<div class="col-md-8" style="font-size:16px; margin-left: 0px;">';
 							echo "and " . (count($playerlist) - $show_max) . " more ...";
 							echo '</div>';
 						}
 					} else {
-						echo "<div class=\"alert\" style=\"font-size:16px;\"> There are no players online at the moment!</div>";
+						echo "<div class=\"alert alert-info\" style=\"font-size:16px;\"> There are no players online at the moment! <i class=\"fa fa-frown-o\"></i></div>";
 					}
 				} else {
-					echo "<div class=\"alert\" style=\"font-size:16px;\"> Query must be enabled in your server.properties file!</div>";
+					echo "<div class=\"alert alert-danger\" style=\"font-size:16px;\"> Query must be enabled in your server.properties file! <i class=\"fa fa-meh-o\"></i></div>";
 				} ?>
 			</div>
 		</div>
