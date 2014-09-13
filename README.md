@@ -1,7 +1,7 @@
 MinecraftAvatarQuery
 ====================
 <a><img src="http://i.imgur.com/I1mdz9Z.png"/></a><br>
-Probably the easiest way to query your Minecraft server with avatars.
+*Probably the easiest way to query your Minecraft server with avatars.*
 
 Features
 ===========
