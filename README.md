@@ -7,7 +7,7 @@ Features
 ===========
 <ul>
 <li>Twitter-Bootstrap HTML framework</li>
-<li>Minecraft skin avatars</li>
+<li>Minecraft skin avatars (3D perspective mode also available)</li>
 <li>Minecraft 1.7 support</li>
 </ul>
 
