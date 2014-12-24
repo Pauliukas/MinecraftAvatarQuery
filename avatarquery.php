@@ -6,7 +6,7 @@
 
 //The following script is tested only with servers running on Minecraft 1.7.
 
-$SERVER_IP = "sky.freecraft.eu"; //Insert the IP of the server you want to query. 
+$SERVER_IP = "mc.eco-city.lt"; //Insert the IP of the server you want to query. 
 $SERVER_PORT = "25555"; //Insert the PORT of the server you want to ping. Needed to get the favicon, motd, players online and players max. etc
 $QUERY_PORT = "25555"; //Port of query.port="" in your server.properties. Needed for the playerlist! Can be the same like the port or different. Query must be enabled in your server.properties file!
 
